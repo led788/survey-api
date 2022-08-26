@@ -83,14 +83,14 @@ async def get_documentation(api_key: APIKey = Depends(get_api_key)):
 
 
 @app.get("/logout")
-async def route_logout_and_remove_cookie():
+def route_logout_and_remove_cookie():
     response = RedirectResponse(url="/")
     response.delete_cookie(API_KEY_NAME, domain=COOKIE_DOMAIN)
     return response
 
 
 @app.get("/v1/surveys")
-async def get_surveys(db: Session = Depends(get_db), api_key: APIKey = Depends(get_api_key)):
+def get_surveys(db: Session = Depends(get_db), api_key: APIKey = Depends(get_api_key)):
     """
     All Surveys list
     """
@@ -98,7 +98,7 @@ async def get_surveys(db: Session = Depends(get_db), api_key: APIKey = Depends(g
 
 
 @app.get("/v1/survey/{survey_id}")
-async def get_survey(survey_id: int, db: Session = Depends(get_db), api_key: APIKey = Depends(get_api_key)):
+def get_survey(survey_id: int, db: Session = Depends(get_db), api_key: APIKey = Depends(get_api_key)):
     """
     Survey with questions list
     """
@@ -106,7 +106,7 @@ async def get_survey(survey_id: int, db: Session = Depends(get_db), api_key: API
 
 
 @app.put("/v1/survey/{survey_id}")
-async def update_survey(survey_id: int, survey: schemas.SurveyCreate, db: Session = Depends(get_db), api_key: APIKey = Depends(get_api_key)):
+def update_survey(survey_id: int, survey: schemas.SurveyCreate, db: Session = Depends(get_db), api_key: APIKey = Depends(get_api_key)):
     """
     Survey update by id
     """
@@ -114,7 +114,7 @@ async def update_survey(survey_id: int, survey: schemas.SurveyCreate, db: Sessio
 
 
 @app.delete("/v1/survey/{survey_id}")
-async def delete_survey(survey_id: int, db: Session = Depends(get_db), api_key: APIKey = Depends(get_api_key)):
+def delete_survey(survey_id: int, db: Session = Depends(get_db), api_key: APIKey = Depends(get_api_key)):
     """
     Delete Survey by id
     """
@@ -122,7 +122,7 @@ async def delete_survey(survey_id: int, db: Session = Depends(get_db), api_key: 
 
 
 @app.post("/v1/question/")
-async def add_question(question: schemas.QuestionCreate, db: Session = Depends(get_db), api_key: APIKey = Depends(get_api_key)):
+def add_question(question: schemas.QuestionCreate, db: Session = Depends(get_db), api_key: APIKey = Depends(get_api_key)):
     """
     Add new question
     """
@@ -131,7 +131,7 @@ async def add_question(question: schemas.QuestionCreate, db: Session = Depends(g
 
 
 @app.put("/v1/question/{question_id}")
-async def update_question(question_id: int, question: schemas.QuestionCreate, db: Session = Depends(get_db), api_key: APIKey = Depends(get_api_key)):
+def update_question(question_id: int, question: schemas.QuestionCreate, db: Session = Depends(get_db), api_key: APIKey = Depends(get_api_key)):
     """
     Question update by id
     """
@@ -139,7 +139,7 @@ async def update_question(question_id: int, question: schemas.QuestionCreate, db
 
 
 @app.delete("/v1/question/{question_id}")
-async def delete_question(question_id: int, db: Session = Depends(get_db), api_key: APIKey = Depends(get_api_key)):
+def delete_question(question_id: int, db: Session = Depends(get_db), api_key: APIKey = Depends(get_api_key)):
     """
     Delete Question by id
     """
@@ -147,7 +147,7 @@ async def delete_question(question_id: int, db: Session = Depends(get_db), api_k
 
 
 @app.get("/v1/answers/{survey_id}")
-async def get_answers(survey_id: int, db: Session = Depends(get_db), api_key: APIKey = Depends(get_api_key)):
+def get_answers(survey_id: int, db: Session = Depends(get_db), api_key: APIKey = Depends(get_api_key)):
     """
     Answers list by survey
     """
@@ -155,11 +155,10 @@ async def get_answers(survey_id: int, db: Session = Depends(get_db), api_key: AP
 
 
 @app.post("/v1/answer/")
-async def add_answer(answer: schemas.AnswerCreate, db: Session = Depends(get_db), api_key: APIKey = Depends(get_api_key)):
+def add_answer(answer: schemas.AnswerCreate, db: Session = Depends(get_db), api_key: APIKey = Depends(get_api_key)):
     """
     Add new answer for survey
     """
     db_question = crud.add_answer(db, answer)
     return db_question
-
 
