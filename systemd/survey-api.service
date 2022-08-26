@@ -1,0 +1,15 @@
+[Unit]
+Description=survey-api gunicorn daemon
+Requires=survey-api.socket
+After=network.target
+
+[Service]
+User=radex
+Group=www-data
+
+WorkingDirectory=/webapp/survey-api
+Environment="PATH=/webapp/survey-api/env/bin"
+ExecStart=/webapp/survey-api/env/bin/gunicorn -w 1 -k uvicorn.workers.UvicornWorker main:app --bind unix:/run/survey-api.sock --error-logfile /var/log/gunicorn/error.log --access-logfile /var/log/gunicorn/access.log --capture-output --log-level debug --reload
+
+[Install]
+WantedBy=multi-user.target

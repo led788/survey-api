@@ -1,0 +1,8 @@
+[Unit]
+Description=gunicorn socket survey-api
+
+[Socket]
+ListenStream=/run/survey-api.sock
+
+[Install]
+WantedBy=sockets.target
